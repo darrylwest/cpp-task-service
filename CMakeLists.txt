@@ -74,8 +74,8 @@ add_definitions(
 )
 
 # Add executable targets
-add_executable(task-runner 
-    ${SRC_DIR}/task-runner.cpp
+add_executable(task-service 
+    ${SRC_DIR}/task-service.cpp
     ${SRC_DIR}/logging.cpp
     ${SRC_DIR}/service.cpp
     ${SRC_DIR}/cli.cpp
@@ -88,7 +88,7 @@ target_link_libraries(task-runner PRIVATE ${DEPENDENT_LIBRARIES})
 target_link_libraries(integration PRIVATE ${DEPENDENT_LIBRARIES})
 
 # Installation rules
-install(TARGETS taskrunner integration DESTINATION ${BIN_DIR})
+install(TARGETS task-runner integration DESTINATION ${BIN_DIR})
 
 # Static linking for standalone executable
 if(NOT APPLE)
