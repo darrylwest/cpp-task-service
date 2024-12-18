@@ -9,7 +9,7 @@
 #include <iostream>
 #include <version.hpp>
 
-namespace cryptor {
+namespace taskservice {
 
     /*
      * parse the command line
@@ -18,7 +18,7 @@ namespace cryptor {
         auto config = Config();
 
         try {
-            cxxopts::Options options("cryptor", "tls server for cryptor web app");
+            cxxopts::Options options("taskservice", "tls server for taskservice web app");
             // clang-format off
             options
                 .add_options()
@@ -33,7 +33,7 @@ namespace cryptor {
                 ;
 
             // clang-format on
-            const auto version = cryptor::Version();
+            const auto version = taskservice::Version();
             const auto result = options.parse(argc, argv);
             if (result.count("version")) {
                 std::cout << "Server Version: " << version << std::endl;
@@ -99,4 +99,4 @@ namespace cryptor {
 
         return config;
     }
-}  // namespace cryptor
+}  // namespace taskservice

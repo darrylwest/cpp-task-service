@@ -8,7 +8,7 @@
 #include <iostream>
 #include <logging.hpp>
 
-namespace cryptor {
+namespace taskservice {
 
     // TODO : set_level
 
@@ -37,4 +37,4 @@ namespace cryptor {
         show_headers(res.headers);
     }
 
-}  // namespace cryptor
+}  // namespace taskservice

@@ -84,11 +84,11 @@ add_executable(task-service
 add_executable(integration ${SRC_DIR}/integration.cpp)
 
 # Link libraries to executables
-target_link_libraries(task-runner PRIVATE ${DEPENDENT_LIBRARIES})
+target_link_libraries(task-service PRIVATE ${DEPENDENT_LIBRARIES})
 target_link_libraries(integration PRIVATE ${DEPENDENT_LIBRARIES})
 
 # Installation rules
-install(TARGETS task-runner integration DESTINATION ${BIN_DIR})
+install(TARGETS task-service integration DESTINATION ${BIN_DIR})
 
 # Static linking for standalone executable
 if(NOT APPLE)

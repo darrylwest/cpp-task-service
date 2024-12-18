@@ -12,7 +12,7 @@
 
 using namespace httplib;
 
-namespace cryptor {
+namespace taskservice {
 
     // Function to set up the server and apply configurations
     bool setup_service(SSLServer &svr, const Config &config) {
@@ -33,7 +33,7 @@ namespace cryptor {
 
         // Logger
         svr.set_logger([](const Request &req, const Response &res) {
-            cryptor::log_request(req, res);
+            taskservice::log_request(req, res);
         });
 
         // Mount point
@@ -50,7 +50,7 @@ namespace cryptor {
         });
 
         svr.Get("/version", [](const Request &, Response &res) {
-            auto vers = cryptor::Version().to_string();
+            auto vers = taskservice::Version().to_string();
             res.set_content(vers, "text/plain");
             spdlog::warn("Version Request: {}", vers);
         });
@@ -63,7 +63,7 @@ namespace cryptor {
         SSLServer svr(config.cert_file.c_str(), config.key_file.c_str());
 
         // Set up the server
-        if (!cryptor::setup_service(svr, config)) {
+        if (!taskservice::setup_service(svr, config)) {
             return false;
         }
 
@@ -72,4 +72,4 @@ namespace cryptor {
         // Start the server
         return svr.listen(config.host, config.port);
     }
-}  // namespace cryptor
+}  // namespace taskservice

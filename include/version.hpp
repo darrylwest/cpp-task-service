@@ -13,7 +13,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace cryptor {
+namespace taskservice {
 
     // version numbers are year.month.day.build where the year/month/day is the release date
     struct Version {

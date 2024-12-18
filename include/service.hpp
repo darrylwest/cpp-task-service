@@ -12,7 +12,7 @@
 
 #include "cli.hpp"
 
-namespace cryptor {
+namespace taskservice {
 
     // Function to set up the server and apply configurations
     bool setup_service(httplib::SSLServer &svr, const Config &config);

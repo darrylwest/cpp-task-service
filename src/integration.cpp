@@ -21,7 +21,7 @@ using namespace colors;
 
 struct Config {
     std::string host = "localhost";
-    std::string port = "22022";
+    std::string port = "22032";
     bool start_server = true;
     std::string logfile = "service.log";
 };
@@ -31,7 +31,7 @@ void run_server(std::atomic<bool>& running, const Config& config) {
     running = true;
 
     // Open a pipe to start the service
-    std::string cmd = "./build/cryptor --base html/";
+    std::string cmd = "./build/task-service --base html/";
     cmd.append(" --host ");
     cmd.append(config.host);
     cmd.append(" --port ");
@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
     // TODO parse the cli to reconfig...
 
     std::string msg = "Cryptor Server Integration Tests, Version: ";
-    std::cout << "\n" << cyan << msg << yellow << cryptor::Version() << reset << std::endl;
+    std::cout << "\n" << cyan << msg << yellow << taskservice::Version() << reset << std::endl;
 
     rcstestlib::Results r = {.name = "Integration Test Summary"};
 
@@ -105,7 +105,7 @@ int main(int argc, char* argv[]) {
     // Verify index page title
     if (auto res = cli.Get("/")) {
         r.equals(res->status == 200);
-        r.equals(res->body.find("<title>Cryptor</title>") != std::string::npos, "the title page shoule be Cryptor");
+        r.equals(res->body.find("<title>Task Runner Service</title>") != std::string::npos, "the title page should be Task Runner Service");
         std::cout << "\t" << green << "Test passed: Index page contains correct title." << reset << std::endl;
     } else {
         std::cerr << "\t" << red << "Test failed: Unable to reach index page." << reset << std::endl;

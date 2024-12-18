@@ -11,11 +11,11 @@
 
 #include "version.hpp"
 
-namespace cryptor {
+namespace taskservice {
 
     struct Config {
         std::string host = "0.0.0.0";
-        int port = 2022;
+        int port = 2032;
         std::string base_dir = "./";
         int verbose = 1;
         std::string cert_file = "./.ssh/cert.pem";

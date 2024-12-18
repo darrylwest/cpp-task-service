@@ -1,5 +1,5 @@
 //
-//  cryptor main
+//  taskservice main
 //
 
 #include <spdlog/spdlog.h>
@@ -22,10 +22,10 @@ int main(const int argc, char **argv) {
         return code;
     }
 
-    const auto config = cryptor::parse_cli(argc, argv);
+    const auto config = taskservice::parse_cli(argc, argv);
 
-    std::string version = "Server Version: ";
-    auto vers = cryptor::Version();
+    std::string version = "Task Runner Service Version: ";
+    auto vers = taskservice::Version();
 
     version.append(vers.to_string());
 
@@ -34,7 +34,7 @@ int main(const int argc, char **argv) {
         spdlog::info("Server Config : {}", config.to_string());
     }
 
-    auto ok = cryptor::run_service(config);
+    auto ok = taskservice::run_service(config);
 
     spdlog::info("Server shutdown, code: {}...", ok);
 
