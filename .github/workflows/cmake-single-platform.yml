@@ -1,0 +1,31 @@
+# This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
+# See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
+name: CMake on a single platform
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up C++ environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install spdlog and cxxopts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libspdlog-dev libcxxopts-dev libcpp-httplib-dev openssl
+
+      - name: Build the project
+        run: |
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build
