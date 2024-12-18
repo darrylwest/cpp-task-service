@@ -74,7 +74,7 @@ void test_host(Results& r) {
     auto cfg = taskservice::parse_cli(argc, argv);
 
     r.equals(cfg.host == "1.1.1.1", "the host assignment");
-    r.equals(cfg.port == 2022, "the default port assignment");
+    r.equals(cfg.port == 2032, "the default port assignment");
     r.equals(cfg.base_dir == "./", "the default base dir assignment");
     r.equals(cfg.verbose == 1, "the default verbose assignment");
     r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
@@ -88,7 +88,7 @@ void test_base(Results& r) {
     auto cfg = taskservice::parse_cli(argc, argv);
 
     r.equals(cfg.base_dir == base, "the base assignment");
-    r.equals(cfg.port == 2022, "the default port assignment");
+    r.equals(cfg.port == 2032, "the default port assignment");
     r.equals(cfg.host == "0.0.0.0", "the default host assignment");
     r.equals(cfg.verbose == 1, "the default verbose assignment");
     r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
@@ -105,7 +105,7 @@ void test_cert_key(Results& r) {
 
     r.equals(cfg.cert_file == cert, "the cert file assignment");
     r.equals(cfg.key_file == key, "the key file assignment");
-    r.equals(cfg.port == 2022, "the default port assignment");
+    r.equals(cfg.port == 2032, "the default port assignment");
     r.equals(cfg.host == "0.0.0.0", "the default host assignment");
     r.equals(cfg.base_dir == "./", "the default base dir assignment");
     r.equals(cfg.verbose == 1, "the default verbose assignment");
