@@ -14,6 +14,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 using namespace httplib;
 
@@ -47,28 +49,28 @@ namespace taskservice {
             return false;
         }
 
-        svr.Get("/build", [](const Request& req, Response& res) {
+        svr.Post("/queue", [](const Request& req, Response& res) {
             spdlog::info("build request");
 
             auto result = build();
 
-            res.set_content(result.c_str(), "text/html");
+            res.set_content(result.c_str(), "text/plain");
         });
 
-        svr.Get("/build/test", [](const Request& req, Response& res) {
-            spdlog::info("build request");
+        svr.Get("/queue", [](const Request& req, Response& res) {
+            spdlog::info("long poll");
 
-            auto result = build_test();
+            std::this_thread::sleep_for(std::chrono::milliseconds(15000));
 
-            res.set_content(result.c_str(), "text/html");
+            auto result = "ok.\n";
+
+            res.set_content(result, "text/plain");
         });
 
-        svr.Get("/clobber/init", [](const Request& req, Response& res) {
-            spdlog::info("build request");
-
-            auto result = clobber_init();
-
-            res.set_content(result.c_str(), "text/html");
+        svr.Get("/version", [](const Request &, Response &res) {
+            auto vers = taskservice::Version().to_string();
+            res.set_content(vers, "text/plain");
+            spdlog::warn("Version Request: {}", vers);
         });
 
         // Shutdown hook
@@ -76,12 +78,6 @@ namespace taskservice {
             res.set_content("ok, shutting down...", "text/plain");
             spdlog::warn("Shutting down...");
             svr.stop();
-        });
-
-        svr.Get("/version", [](const Request &, Response &res) {
-            auto vers = taskservice::Version().to_string();
-            res.set_content(vers, "text/plain");
-            spdlog::warn("Version Request: {}", vers);
         });
 
         return true;
