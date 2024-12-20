@@ -63,6 +63,14 @@ namespace taskservice {
             res.set_content(result.c_str(), "text/html");
         });
 
+        svr.Get("/clobber/init", [](const Request& req, Response& res) {
+            spdlog::info("build request");
+
+            auto result = clobber_init();
+
+            res.set_content(result.c_str(), "text/html");
+        });
+
         // Shutdown hook
         svr.Delete("/shutdown", [&](const Request &, Response &res) {
             res.set_content("ok, shutting down...", "text/plain");
