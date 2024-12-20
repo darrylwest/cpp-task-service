@@ -17,17 +17,19 @@ namespace taskservice {
         std::string host = "0.0.0.0";
         int port = 2032;
         std::string base_dir = "./";
+        bool client = false;
         int verbose = 1;
         std::string cert_file = "./.ssh/cert.pem";
         std::string key_file = "./.ssh/key.pem";
 
         friend std::ostream& operator<<(std::ostream& os, const Config v) {
             // better to use <format> but it breaks on linux and fmt broken on darwin
-            os << "host: " << v.host << ", "
-               << "port: " << v.port << ", "
-               << "base: " << v.base_dir << ", "
-               << "cert: " << v.cert_file << ", "
-               << "key : " << v.key_file << ", "
+            os << "host:  " << v.host << ", "
+               << "port:  " << v.port << ", "
+               << "base:  " << v.base_dir << ", "
+               << "client:" << v.client << ", "
+               << "cert:  " << v.cert_file << ", "
+               << "key :  " << v.key_file << ", "
                << "verbose: " << v.verbose << ".";
             return os;
         }

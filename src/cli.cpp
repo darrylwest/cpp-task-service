@@ -18,13 +18,14 @@ namespace taskservice {
         auto config = Config();
 
         try {
-            cxxopts::Options options("taskservice", "tls server for taskservice web app");
+            cxxopts::Options options("TaskService", "TLS server and client to queue and run jobs.");
             // clang-format off
             options
                 .add_options()
                     ("p,port", "listening port", cxxopts::value<int>())
                     ("H,host", "listening host", cxxopts::value<std::string>())
                     ("b,base", "base directory to serve", cxxopts::value<std::string>())
+                    ("c,client", "run as a client", cxxopts::value<std::string>())
                     ("C,cert", "the cert pem file", cxxopts::value<std::string>())
                     ("K,key", "the key pem file", cxxopts::value<std::string>())
                     ("l,level", "verbose level 0--4", cxxopts::value<int>())
