@@ -30,7 +30,17 @@ namespace taskservice {
     }
 
     auto build() {
+        const auto cmd = "./mk build";
+        return exec(cmd);
+    }
+
+    auto build_test() {
         const auto cmd = "./mk build test";
+        return exec(cmd);
+    }
+
+    auto clobber_init() {
+        const auto cmd = "./mk clobber init";
         return exec(cmd);
     }
 }
