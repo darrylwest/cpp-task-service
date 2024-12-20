@@ -5,24 +5,29 @@
 #include <httplib.h>
 #include <spdlog/spdlog.h>
 
+#include <runner.hpp>
+
 #include <cstdio>
 #include <iostream>
 #include <logging.hpp>
 #include <service.hpp>
+#include <cstdlib>
+#include <fstream>
+#include <sstream>
 
 using namespace httplib;
 
 namespace taskservice {
 
     // Function to set up the server and apply configurations
-    bool setup_service(SSLServer &svr, const Config &config) {
+    bool setup_service(SSLServer& svr, const Config& config) {
         if (svr.is_valid() == 0) {
             spdlog::error("ERROR! Server is not valid. Check the cert/key files? Exiting...");
             return false;
         }
 
         // Error handler
-        svr.set_error_handler([](const Request &req, Response &res) {
+        svr.set_error_handler([](const Request& req, Response& res) {
             spdlog::error("ERROR! bad request {} {}", req.method.c_str(), req.path.c_str());
             // TODO : replace this with spdlog::fmt...
             const char *fmt = "<p>Error Status: <span style='color:red;'>%d</span></p>";
@@ -41,6 +46,14 @@ namespace taskservice {
             spdlog::error("ERROR! The specified base directory {} doesn't exist...", config.base_dir);
             return false;
         }
+
+        svr.Get("/build", [](const Request& req, Response& res) {
+            spdlog::info("build request");
+
+            auto result = build();
+
+            res.set_content(result.c_str(), "text/html");
+        });
 
         // Shutdown hook
         svr.Delete("/shutdown", [&](const Request &, Response &res) {
