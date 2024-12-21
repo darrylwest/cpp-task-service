@@ -52,9 +52,7 @@ namespace taskservice {
         svr.Post("/queue", [](const Request& req, Response& res) {
             spdlog::info("build request");
 
-            auto result = build();
-
-            res.set_content(result.c_str(), "text/plain");
+            res.set_content("ok", "text/plain");
         });
 
         svr.Get("/queue", [](const Request& req, Response& res) {

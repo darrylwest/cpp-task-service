@@ -41,7 +41,6 @@ namespace taskservice {
             return oss.str();
         }
 
-        Config parse_cli(const int argc, char** argv);
     };
 
     Config parse_cli(const int argc, char** argv);
