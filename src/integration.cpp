@@ -31,7 +31,7 @@ void run_server(std::atomic<bool>& running, const Config& config) {
     running = true;
 
     // Open a pipe to start the service
-    std::string cmd = "./build/task-service --base html/";
+    std::string cmd = "./build/task-service ";
     cmd.append(" --host ");
     cmd.append(config.host);
     cmd.append(" --port ");
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
 
     // TODO parse the cli to reconfig...
 
-    std::string msg = "Cryptor Server Integration Tests, Version: ";
+    std::string msg = "Task Service Integration Tests, Version: ";
     std::cout << "\n" << cyan << msg << yellow << taskservice::Version() << reset << std::endl;
 
     rcstestlib::Results r = {.name = "Integration Test Summary"};
@@ -105,7 +105,7 @@ int main(int argc, char* argv[]) {
     // Verify index page title
     if (auto res = cli.Get("/")) {
         r.equals(res->status == 200);
-        r.equals(res->body.find("<title>Task Runner Service</title>") != std::string::npos, "the title page should be Task Runner Service");
+        r.equals(res->body.find("Task Service") != std::string::npos, "the plain home page should exist.");
         std::cout << "\t" << green << "Test passed: Index page contains correct title." << reset << std::endl;
     } else {
         std::cerr << "\t" << red << "Test failed: Unable to reach index page." << reset << std::endl;
