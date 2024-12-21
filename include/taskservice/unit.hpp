@@ -162,20 +162,39 @@ Results test_service() {
 //
 // tasks tests
 //
-void test_put(Results& r) {
-    auto cmd = std::string("mk clobber init build test");
-    auto t = taskservice::put_task(cmd);
+void test_get_nulltask(Results& r) {
+    const auto t = taskservice::get_task();
 
-    r.equals(t.command == cmd, "should equal the command");
+    r.equals(t.command == "", "the command should be an empty string");
+    r.equals(t.created == 0, "created should be zero");
+}
+
+void test_put(Results& r) {
+    const auto cmd = std::string("mk clobber init build test");
+    const auto t = taskservice::put_task(cmd);
+
+    r.equals(t.command == t.command, "the command should be what was passed in");
+    r.equals(t.created > 0, "created should not be zero");
+}
+
+void test_get_task(Results& r) {
+    const auto cmd = std::string("mk build test");
+    const auto t1 = taskservice::put_task(cmd);
+
+    r.equals(t1.command == t1.command, "the command should be what was passed in");
+    r.equals(t1.created > 0, "created should not be zero");
+
+    const auto t2 = taskservice::get_task();
+
+    r.equals(t2.command == t1.command, "the command should equal what was put");
+    r.equals(t2.created == t1.created, "created should be equal what was put");
 }
 
 Results test_tasks() {
-    spdlog::set_level(spdlog::level::debug);
     Results r = {.name = "Task DB Tests"};
 
+    test_get_nulltask(r);
     test_put(r);
-
-    spdlog::set_level(spdlog::level::off);
 
     return r;
 }

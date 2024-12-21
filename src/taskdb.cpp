@@ -5,10 +5,12 @@
 #include <mutex>
 #include <vector>
 #include <spdlog/spdlog.h>
+#include <thread>
 
 #include <taskservice/taskdb.hpp>
 
 namespace taskservice {
+    const auto nulltask = Task{.command = "", .created = 0};
     std::vector<Task> tasks = {};
     std::mutex tasks_mutex;
 
@@ -24,13 +26,19 @@ namespace taskservice {
         return t;
     }
 
+    // return the last task entered or a null task
     Task get_task() {
         std::lock_guard<std::mutex> lock(tasks_mutex);
-        Task t = tasks.back();
+        if (not tasks.empty()) {
+            Task t = tasks.back();
 
-        spdlog::info("created: {}, task: {}", t.created, t.command);
+            spdlog::info("got task: {}, task: {}", t.created, t.command);
 
-        return t;
+            return t;
+        } else {
+            spdlog::info("return null task");
+            return nulltask;
+        }
     }
 
 }
