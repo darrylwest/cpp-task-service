@@ -48,7 +48,7 @@ do
         ;;
         run)
             # TODO check that task-service has been built and is newer that all the souces
-            $root/build/task-service --base $root/html
+            $root/build/task-service
 
             shift
         ;;
