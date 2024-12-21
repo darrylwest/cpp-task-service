@@ -44,11 +44,11 @@ namespace taskservice {
             taskservice::log_request(req, res);
         });
 
-        // Mount point
-        if (!svr.set_mount_point("/", config.base_dir)) {
-            spdlog::error("ERROR! The specified base directory {} doesn't exist...", config.base_dir);
-            return false;
-        }
+        svr.Get("/", [](const Request& req, Response& res) {
+            spdlog::info("home request");
+
+            res.set_content("Task Service Home Page\n", "text/plain");
+        });
 
         svr.Post("/queue", [](const Request& req, Response& res) {
             spdlog::info("build request");

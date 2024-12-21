@@ -24,8 +24,7 @@ namespace taskservice {
                 .add_options()
                     ("p,port", "listening port", cxxopts::value<int>())
                     ("H,host", "listening host", cxxopts::value<std::string>())
-                    ("b,base", "base directory to serve", cxxopts::value<std::string>())
-                    ("c,client", "run as a client", cxxopts::value<std::string>())
+                    ("c,client", "run as a client")
                     ("C,cert", "the cert pem file", cxxopts::value<std::string>())
                     ("K,key", "the key pem file", cxxopts::value<std::string>())
                     ("l,level", "verbose level 0--4", cxxopts::value<int>())
@@ -55,8 +54,8 @@ namespace taskservice {
                 config.host = result["host"].as<std::string>();
             }
 
-            if (result.count("base")) {
-                config.base_dir = result["base"].as<std::string>();
+            if (result.count("client")) {
+                config.client = true;
             }
 
             if (result.count("cert")) {

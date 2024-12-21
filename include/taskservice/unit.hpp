@@ -49,10 +49,10 @@ void test_default_config(Results& r) {
 
     r.equals(cfg.port == 2032, "the default port assignment");
     r.equals(cfg.host == "0.0.0.0", "the default host assignment");
-    r.equals(cfg.base_dir == "./", "the default base dir assignment");
     r.equals(cfg.verbose == 1, "the default verbose assignment");
     r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
     r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
+    r.equals(cfg.client == false, "client should be false");
 }
 
 void test_port(Results& r) {
@@ -63,10 +63,10 @@ void test_port(Results& r) {
     r.equals(cfg.port == 2500, "the port assignment");
 
     r.equals(cfg.host == "0.0.0.0", "the default host assignment");
-    r.equals(cfg.base_dir == "./", "the default base dir assignment");
     r.equals(cfg.verbose == 1, "the default verbose assignment");
     r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
     r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
+    r.equals(cfg.client == false, "client should be false");
 }
 
 void test_host(Results& r) {
@@ -76,24 +76,10 @@ void test_host(Results& r) {
 
     r.equals(cfg.host == "1.1.1.1", "the host assignment");
     r.equals(cfg.port == 2032, "the default port assignment");
-    r.equals(cfg.base_dir == "./", "the default base dir assignment");
     r.equals(cfg.verbose == 1, "the default verbose assignment");
     r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
     r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
-}
-
-void test_base(Results& r) {
-    auto base = "/www/home";
-    const std::vector<std::string> args = {"test", "--base", base};
-    auto [argc, argv] = build_args(args);
-    auto cfg = taskservice::parse_cli(argc, argv);
-
-    r.equals(cfg.base_dir == base, "the base assignment");
-    r.equals(cfg.port == 2032, "the default port assignment");
-    r.equals(cfg.host == "0.0.0.0", "the default host assignment");
-    r.equals(cfg.verbose == 1, "the default verbose assignment");
-    r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
-    r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
+    r.equals(cfg.client == false, "client should be false");
 }
 
 void test_cert_key(Results& r) {
@@ -108,8 +94,21 @@ void test_cert_key(Results& r) {
     r.equals(cfg.key_file == key, "the key file assignment");
     r.equals(cfg.port == 2032, "the default port assignment");
     r.equals(cfg.host == "0.0.0.0", "the default host assignment");
-    r.equals(cfg.base_dir == "./", "the default base dir assignment");
     r.equals(cfg.verbose == 1, "the default verbose assignment");
+    r.equals(cfg.client == false, "client should be false");
+}
+
+void test_client(Results& r) {
+    const std::vector<std::string> args = {"test", "--client"};
+    auto [argc, argv] = build_args(args);
+    auto cfg = taskservice::parse_cli(argc, argv);
+
+    r.equals(cfg.client == true, "client should be true");
+    r.equals(cfg.port == 2032, "the default port assignment");
+    r.equals(cfg.host == "0.0.0.0", "the default host assignment");
+    r.equals(cfg.verbose == 1, "the default verbose assignment");
+    r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
+    r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
 }
 
 Results test_cli() {
@@ -118,7 +117,7 @@ Results test_cli() {
     test_default_config(r);
     test_port(r);
     test_host(r);
-    test_base(r);
+    test_client(r);
     test_cert_key(r);
 
     return r;
@@ -150,22 +149,12 @@ void test_bad_key(Results& r) {
     r.equals(ok == false, "should fail with bad cert file server");
 }
 
-void test_bad_mount(Results& r) {
-    auto config = taskservice::Config();
-    config.base_dir = "./no-file-here.pem";
-    httplib::SSLServer svr(config.cert_file.c_str(), config.key_file.c_str());
-    auto ok = taskservice::setup_service(svr, config);
-
-    r.equals(ok == false, "should fail with bad file server");
-}
-
 Results test_service() {
     Results r = {.name = "HTTPS Service Tests"};
 
     test_default_service(r);
     test_bad_cert(r);
     test_bad_key(r);
-    test_bad_mount(r);
 
     return r;
 }
