@@ -78,6 +78,7 @@ add_executable(task-service
     ${SRC_DIR}/task-service.cpp
     ${SRC_DIR}/logging.cpp
     ${SRC_DIR}/service.cpp
+    ${SRC_DIR}/tasks.cpp
     ${SRC_DIR}/cli.cpp
 )
 

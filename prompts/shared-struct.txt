@@ -1,14 +1,33 @@
-I have a c++20 struct that I need shared access to from multiple threads.  I want to mutex/lock the two methods put and get.  here is the struct:
+The c++20 struct below contains a vector that I need shared access to from multiple threads.  I want to mutex/lock the two methods put and get.  Can you re-write this?
 
 namespace taskservice {
     struct Task {
         std::string task = "";
         std::  created;
-
-        void add_task(std::string cmd) {
-
-        }
     }
+
+    std::vector<Task> tasks = {};
+
+    // now define the funcs
+    Task put(std::string cmd) {
+        auto now = now();
+        Task t = Task{.task = cmd, .created = now}
+
+        // lock first
+        tasks.push_back(t);
+
+        return t;
+    }
+
+    Task get() {
+        // lock first
+        Task t = tasks.back();
+
+        return t;
+    }
+}
+
+
 
 
 

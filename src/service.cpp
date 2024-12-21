@@ -6,6 +6,7 @@
 #include <spdlog/spdlog.h>
 
 #include <runner.hpp>
+#include <tasks.hpp>
 
 #include <cstdio>
 #include <iostream>

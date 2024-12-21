@@ -7,6 +7,7 @@
 #include <cli.hpp>
 #include <logging.hpp>
 #include <service.hpp>
+#include <tasks.hpp>
 #include <unit.hpp>
 #include <version.hpp>
 

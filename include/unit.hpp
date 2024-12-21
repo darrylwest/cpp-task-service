@@ -5,6 +5,7 @@
 #include <cli.hpp>
 #include <logging.hpp>
 #include <service.hpp>
+#include <tasks.hpp>
 #include <vendor/ansi_colors.hpp>
 #include <vendor/testlib.hpp>
 #include <version.hpp>
@@ -169,6 +170,27 @@ Results test_service() {
     return r;
 }
 
+//
+// tasks tests
+//
+void test_put(Results& r) {
+    auto cmd = std::string("mk clobber init build test");
+    auto t = taskservice::put_task(cmd);
+
+    r.equals(t.command == cmd, "should equal the command");
+}
+
+Results test_tasks() {
+    spdlog::set_level(spdlog::level::debug);
+    Results r = {.name = "Task DB Tests"};
+
+    test_put(r);
+
+    spdlog::set_level(spdlog::level::off);
+
+    return r;
+}
+
 // replaces main
 int run_unit_tests(int argc, char* argv[]) {
     using namespace colors;
@@ -189,6 +211,7 @@ int run_unit_tests(int argc, char* argv[]) {
 
     run_test(test_version);
     run_test(test_cli);
+    run_test(test_tasks);
     run_test(test_service);
 
     std::cout << "\n" << summary << std::endl;
