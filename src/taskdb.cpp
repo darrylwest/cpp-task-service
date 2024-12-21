@@ -59,14 +59,17 @@ namespace taskservice {
                     return Task{.command = task, .created = timestamp};
                 } catch (const std::invalid_argument& e) {
                     // Handle invalid timestamp (e.g., not a number)
+                    spdlog::error("invalid timestamp error parsing Task from string: {}", task_str);
                     return nulltask;
                 } catch (const std::out_of_range& e) {
                     // Handle timestamp out of range for std::time_t
+                    spdlog::error("out of range error parsing Task from string: {}", task_str);
                     return nulltask;
                 }
             }
         }
 
+        spdlog::error("invalid parse format Task from string: {}", task_str);
         return nulltask;
     }
 

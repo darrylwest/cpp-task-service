@@ -173,11 +173,23 @@ void test_get_task(Results& r) {
 }
 
 void test_task_from_string(Results& r) {
-    std::string s1 = "1734821177:mk build test";
+    const std::string tstr1 = "1734821177:mk build test";
 
-    taskservice::Task task = taskservice::task_from_string(s1);
+    taskservice::Task task = taskservice::task_from_string(tstr1);
     r.equals(task.created == 1734821177, "should parse the correct task time stamp");
     r.equals(task.command == "mk build test", "should parse the correct task time stamp");
+
+    const std::string tstr2 = "1734821177 mk build test";
+
+    task = taskservice::task_from_string(tstr2);
+    r.equals(task.created == 0, "should parse the correct task time stamp");
+    r.equals(task.command == "", "should parse the correct task time stamp");
+
+    const std::string tstr3 = "mk build test";
+
+    task = taskservice::task_from_string(tstr3);
+    r.equals(task.created == 0, "should parse the correct task time stamp");
+    r.equals(task.command == "", "should parse the correct task time stamp");
 }
 
 Results test_tasks() {
@@ -186,6 +198,7 @@ Results test_tasks() {
     test_get_nulltask(r);
     test_put(r);
     test_get_task(r);
+    test_task_from_string(r);
 
     return r;
 }
