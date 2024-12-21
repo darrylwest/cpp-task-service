@@ -6,9 +6,9 @@
 #include <taskservice/logging.hpp>
 #include <taskservice/service.hpp>
 #include <taskservice/taskdb.hpp>
+#include <taskservice/version.hpp>
 #include <vendor/ansi_colors.hpp>
 #include <vendor/testlib.hpp>
-#include <taskservice/version.hpp>
 
 // the actual tests
 using namespace rcstestlib;

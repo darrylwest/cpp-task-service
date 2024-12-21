@@ -4,9 +4,9 @@
 
 #pragma once
 
+#include <array>
 #include <iostream>
 #include <memory>
-#include <array>
 
 namespace taskservice {
 
@@ -26,4 +26,4 @@ namespace taskservice {
         }
         return result;
     }
-}
+}  // namespace taskservice

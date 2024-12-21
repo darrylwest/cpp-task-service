@@ -5,17 +5,16 @@
 #include <httplib.h>
 #include <spdlog/spdlog.h>
 
-#include <taskservice/runner.hpp>
-#include <taskservice/taskdb.hpp>
-
+#include <chrono>
 #include <cstdio>
-#include <iostream>
-#include <taskservice/logging.hpp>
-#include <taskservice/service.hpp>
 #include <cstdlib>
 #include <fstream>
+#include <iostream>
 #include <sstream>
-#include <chrono>
+#include <taskservice/logging.hpp>
+#include <taskservice/runner.hpp>
+#include <taskservice/service.hpp>
+#include <taskservice/taskdb.hpp>
 #include <thread>
 
 using namespace httplib;
@@ -33,14 +32,14 @@ namespace taskservice {
         svr.set_error_handler([](const Request& req, Response& res) {
             spdlog::error("ERROR! bad request {} {}", req.method.c_str(), req.path.c_str());
 
-            const char *fmt = "Error Status: %d\n";
+            const char* fmt = "Error Status: %d\n";
             char buf[BUFSIZ];
             snprintf(buf, sizeof(buf), fmt, res.status);
             res.set_content(buf, "text/plain");
         });
 
         // Logger
-        svr.set_logger([](const Request &req, const Response &res) {
+        svr.set_logger([](const Request& req, const Response& res) {
             taskservice::log_request(req, res);
         });
 
@@ -53,14 +52,14 @@ namespace taskservice {
         svr.Post("/queue", [](const Request& req, Response& res) {
             std::string cmd = "";
             for (auto it = req.params.begin(); it != req.params.end(); ++it) {
-                const auto &x = *it;
+                const auto& x = *it;
                 cmd.append(x.first.c_str());
             }
 
             spdlog::info("task request: {}", cmd.c_str());
 
             const taskservice::Task t = taskservice::put_task(cmd);
-            
+
             res.set_content(t.to_string(), "text/plain");
         });
 
@@ -73,14 +72,14 @@ namespace taskservice {
             res.set_content(t.to_string(), "text/plain");
         });
 
-        svr.Get("/version", [](const Request &, Response &res) {
+        svr.Get("/version", [](const Request&, Response& res) {
             auto vers = taskservice::Version().to_string();
             res.set_content(vers, "text/plain");
             spdlog::warn("Version Request: {}", vers);
         });
 
         // Shutdown hook
-        svr.Delete("/shutdown", [&](const Request &, Response &res) {
+        svr.Delete("/shutdown", [&](const Request&, Response& res) {
             res.set_content("ok, shutting down...", "text/plain");
             spdlog::warn("Shutting down...");
             svr.stop();
@@ -90,7 +89,7 @@ namespace taskservice {
     }
 
     // Function to run the server
-    bool run_service(const Config &config) {
+    bool run_service(const Config& config) {
         SSLServer svr(config.cert_file.c_str(), config.key_file.c_str());
 
         // Set up the server

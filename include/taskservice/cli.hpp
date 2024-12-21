@@ -8,6 +8,7 @@
 
 #include <cxxopts.hpp>
 #include <iostream>
+#include <sstream>
 
 #include "version.hpp"
 
@@ -36,8 +37,7 @@ namespace taskservice {
 
             return oss.str();
         }
-
     };
 
     Config parse_cli(const int argc, char** argv);
-}  // namespace cryptor
+}  // namespace taskservice

@@ -12,10 +12,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
+#include <taskservice/version.hpp>
 #include <thread>
 #include <vendor/ansi_colors.hpp>
 #include <vendor/testlib.hpp>
-#include <taskservice/version.hpp>
 
 using namespace colors;
 

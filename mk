@@ -59,7 +59,7 @@ do
             shift
         ;;
         format)
-            clang-format -i include/*.hpp src/*.cpp
+            clang-format -i include/taskservice/*.hpp src/*.cpp
             git status -s
 
             shift

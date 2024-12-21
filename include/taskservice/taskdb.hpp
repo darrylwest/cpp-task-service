@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <mutex>
-#include <vector>
 #include <iostream>
+#include <mutex>
 #include <sstream>
+#include <vector>
 
 namespace taskservice {
     struct Task {
@@ -17,7 +17,7 @@ namespace taskservice {
         friend std::ostream& operator<<(std::ostream& os, const Task v) {
             // better to use <format> but it breaks on linux and fmt broken on darwin
             os << v.command << " : created: " << v.created;
-               
+
             return os;
         }
 
@@ -29,7 +29,6 @@ namespace taskservice {
         }
     };
 
-
     Task put_task(std::string cmd);
     Task get_task();
-}
+}  // namespace taskservice

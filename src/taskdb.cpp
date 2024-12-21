@@ -2,12 +2,12 @@
 // 2024-12-21 07:33:17 dpw
 //
 
-#include <mutex>
-#include <vector>
 #include <spdlog/spdlog.h>
-#include <thread>
 
+#include <mutex>
 #include <taskservice/taskdb.hpp>
+#include <thread>
+#include <vector>
 
 namespace taskservice {
     const auto nulltask = Task{.command = "", .created = 0};
@@ -41,4 +41,4 @@ namespace taskservice {
         }
     }
 
-}
+}  // namespace taskservice
