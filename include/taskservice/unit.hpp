@@ -172,11 +172,20 @@ void test_get_task(Results& r) {
     r.equals(t2.created == t1.created, "created should be equal what was put");
 }
 
+void test_task_from_string(Results& r) {
+    std::string s1 = "1734821177:mk build test";
+
+    taskservice::Task task = taskservice::task_from_string(s1);
+    r.equals(task.created == 1734821177, "should parse the correct task time stamp");
+    r.equals(task.command == "mk build test", "should parse the correct task time stamp");
+}
+
 Results test_tasks() {
     Results r = {.name = "Task DB Tests"};
 
     test_get_nulltask(r);
     test_put(r);
+    test_get_task(r);
 
     return r;
 }

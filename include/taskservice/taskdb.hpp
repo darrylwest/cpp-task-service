@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <ctime>
 #include <iostream>
 #include <mutex>
 #include <sstream>
@@ -16,7 +17,7 @@ namespace taskservice {
 
         friend std::ostream& operator<<(std::ostream& os, const Task v) {
             // better to use <format> but it breaks on linux and fmt broken on darwin
-            os << v.command << " : created: " << v.created;
+            os << v.created << ":" << v.command;
 
             return os;
         }
@@ -29,6 +30,7 @@ namespace taskservice {
         }
     };
 
-    Task put_task(std::string cmd);
+    Task task_from_string(const std::string task_str);
+    Task put_task(const std::string cmd);
     Task get_task();
 }  // namespace taskservice
