@@ -10,6 +10,7 @@
 #include <vector>
 
 namespace taskservice {
+    const auto max_vec_size = 10;
     const auto nulltask = Task{.command = "", .created = 0};
     std::vector<Task> tasks = {};
     std::mutex tasks_mutex;
@@ -19,9 +20,13 @@ namespace taskservice {
         auto now = std::time(nullptr);
         Task t = Task{.command = cmd, .created = now};
 
-        spdlog::info("created: {}, task: {}", t.created, t.command);
+        tasks.insert(tasks.begin(), t);
+        spdlog::info("created: {}, task: {} : db size: {}", t.created, t.command, tasks.size());
 
-        tasks.push_back(t);
+        if (tasks.size() > max_vec_size) {
+            spdlog::info("pop back to keep size to {}.", max_vec_size);
+            tasks.pop_back();
+        }
 
         return t;
     }
@@ -30,7 +35,7 @@ namespace taskservice {
     Task get_task() {
         std::lock_guard<std::mutex> lock(tasks_mutex);
         if (not tasks.empty()) {
-            Task t = tasks.back();
+            Task t = tasks.front();
 
             spdlog::info("got task: {}, task: {}", t.created, t.command);
 
