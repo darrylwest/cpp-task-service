@@ -1,0 +1,62 @@
+I have a small bit of c++20 code that compiles on mac and linux but fails on linux g++ version 11.  Can you help me fix?
+
+The code:
+
+#pragma once
+
+#include <mutex>
+#include <vector>
+#include <iostream>
+
+namespace taskservice {
+    struct Task {
+        std::string command = "";
+        std::time_t created = std::time(nullptr);
+
+        friend std::ostream& operator<<(std::ostream& os, const Task v) {
+            // better to use <format> but it breaks on linux and fmt broken on darwin
+            os << v.command << " : created: " << v.created;
+               
+            return os;
+        }
+
+        std::string to_string() const {
+            std::ostringstream oss;
+            oss << *this;
+
+            return oss.str();
+        }
+    };
+
+
+    Task put_task(std::string cmd);
+    Task get_task();
+}
+
+The compile error:
+
+/usr/bin/cmake -S/home/dpw/raincity/c-projects/task-service -B/home/dpw/raincity/c-projects/task-service/build --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/cmake -E cmake_progress_start /home/dpw/raincity/c-projects/task-service/build/CMakeFiles /home/dpw/raincity/c-projects/task-service/build//CMakeFiles/progress.marks
+make  -f CMakeFiles/Makefile2 all
+make[1]: Entering directory '/home/dpw/raincity/c-projects/task-service/build'
+make  -f CMakeFiles/task-service.dir/build.make CMakeFiles/task-service.dir/depend
+make[2]: Entering directory '/home/dpw/raincity/c-projects/task-service/build'
+cd /home/dpw/raincity/c-projects/task-service/build && /usr/bin/cmake -E cmake_depends "Unix Makefiles" /home/dpw/raincity/c-projects/task-service /home/dpw/raincity/c-projects/task-service /home/dpw/raincity/c-projects/task-service/build /home/dpw/raincity/c-projects/task-service/build /home/dpw/raincity/c-projects/task-service/build/CMakeFiles/task-service.dir/DependInfo.cmake --color=
+Dependencies file "CMakeFiles/task-service.dir/src/taskdb.cpp.o.d" is newer than depends file "/home/dpw/raincity/c-projects/task-service/build/CMakeFiles/task-service.dir/compiler_depend.internal".
+Consolidate compiler generated dependencies of target task-service
+make[2]: Leaving directory '/home/dpw/raincity/c-projects/task-service/build'
+make  -f CMakeFiles/task-service.dir/build.make CMakeFiles/task-service.dir/build
+make[2]: Entering directory '/home/dpw/raincity/c-projects/task-service/build'
+[ 12%] Building CXX object CMakeFiles/task-service.dir/src/taskdb.cpp.o
+/usr/bin/c++ -DCPPHTTPLIB_BROTLI_SUPPORT -DCPPHTTPLIB_OPENSSL_SUPPORT -DCPPHTTPLIB_ZLIB_SUPPORT -DSPDLOG_COMPILED_LIB -I/home/dpw/raincity/c-projects/task-service/include -isystem /home/dpw/raincity/c-projects/task-service/include/vendor -O3 -DNDEBUG -std=c++20 -MD -MT CMakeFiles/task-service.dir/src/taskdb.cpp.o -MF CMakeFiles/task-service.dir/src/taskdb.cpp.o.d -o CMakeFiles/task-service.dir/src/taskdb.cpp.o -c /home/dpw/raincity/c-projects/task-service/src/taskdb.cpp
+In file included from /home/dpw/raincity/c-projects/task-service/src/taskdb.cpp:10:
+/home/dpw/raincity/c-projects/task-service/include/taskservice/taskdb.hpp: In member function ‘std::string taskservice::Task::to_string() const’:
+/home/dpw/raincity/c-projects/task-service/include/taskservice/taskdb.hpp:25:32: error: aggregate ‘std::ostringstream oss’ has incomplete type and cannot be defined
+   25 |             std::ostringstream oss;
+      |                                ^~~
+make[2]: *** [CMakeFiles/task-service.dir/build.make:118: CMakeFiles/task-service.dir/src/taskdb.cpp.o] Error 1
+make[2]: Leaving directory '/home/dpw/raincity/c-projects/task-service/build'
+make[1]: *** [CMakeFiles/Makefile2:85: CMakeFiles/task-service.dir/all] Error 2
+make[1]: Leaving directory '/home/dpw/raincity/c-projects/task-service/build'
+make: *** [Makefile:136: all] Error 2
+
