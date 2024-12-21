@@ -1,0 +1,15 @@
+I have a c++20 struct that I need shared access to from multiple threads.  I want to mutex/lock the two methods put and get.  here is the struct:
+
+namespace taskservice {
+    struct Task {
+        std::string task = "";
+        std::  created;
+
+        void add_task(std::string cmd) {
+
+        }
+    }
+
+
+
+

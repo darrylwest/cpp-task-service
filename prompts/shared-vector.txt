@@ -1,3 +1,0 @@
-I have a c++20 struct that contains a vector.  the struct has methods two methods
-
-
