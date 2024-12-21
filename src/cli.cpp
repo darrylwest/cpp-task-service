@@ -4,10 +4,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include <cli.hpp>
+#include <taskservice/cli.hpp>
 #include <cxxopts.hpp>
 #include <iostream>
-#include <version.hpp>
+#include <taskservice/version.hpp>
 
 namespace taskservice {
 

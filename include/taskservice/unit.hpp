@@ -2,13 +2,13 @@
 // 2024-12-10 18:27:44 dpw
 //
 
-#include <cli.hpp>
-#include <logging.hpp>
-#include <service.hpp>
-#include <tasks.hpp>
+#include <taskservice/cli.hpp>
+#include <taskservice/logging.hpp>
+#include <taskservice/service.hpp>
+#include <taskservice/tasks.hpp>
 #include <vendor/ansi_colors.hpp>
 #include <vendor/testlib.hpp>
-#include <version.hpp>
+#include <taskservice/version.hpp>
 
 // the actual tests
 using namespace rcstestlib;

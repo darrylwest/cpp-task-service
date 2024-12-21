@@ -6,7 +6,7 @@
 #include <spdlog/spdlog.h>
 
 #include <iostream>
-#include <logging.hpp>
+#include <taskservice/logging.hpp>
 
 namespace taskservice {
 

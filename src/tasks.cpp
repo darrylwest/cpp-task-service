@@ -6,7 +6,7 @@
 #include <vector>
 #include <spdlog/spdlog.h>
 
-#include <tasks.hpp>
+#include <taskservice/tasks.hpp>
 
 namespace taskservice {
     std::vector<Task> tasks = {};

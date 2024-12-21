@@ -4,12 +4,12 @@
 
 #include <spdlog/spdlog.h>
 
-#include <cli.hpp>
-#include <logging.hpp>
-#include <service.hpp>
-#include <tasks.hpp>
-#include <unit.hpp>
-#include <version.hpp>
+#include <taskservice/cli.hpp>
+#include <taskservice/logging.hpp>
+#include <taskservice/service.hpp>
+#include <taskservice/tasks.hpp>
+#include <taskservice/unit.hpp>
+#include <taskservice/version.hpp>
 
 int main(const int argc, char **argv) {
     using namespace httplib;

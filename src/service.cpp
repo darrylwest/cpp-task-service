@@ -5,13 +5,13 @@
 #include <httplib.h>
 #include <spdlog/spdlog.h>
 
-#include <runner.hpp>
-#include <tasks.hpp>
+#include <taskservice/runner.hpp>
+#include <taskservice/tasks.hpp>
 
 #include <cstdio>
 #include <iostream>
-#include <logging.hpp>
-#include <service.hpp>
+#include <taskservice/logging.hpp>
+#include <taskservice/service.hpp>
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
