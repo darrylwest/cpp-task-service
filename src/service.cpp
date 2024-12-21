@@ -6,7 +6,7 @@
 #include <spdlog/spdlog.h>
 
 #include <taskservice/runner.hpp>
-#include <taskservice/tasks.hpp>
+#include <taskservice/taskdb.hpp>
 
 #include <cstdio>
 #include <iostream>

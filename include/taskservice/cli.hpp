@@ -16,7 +16,6 @@ namespace taskservice {
     struct Config {
         std::string host = "0.0.0.0";
         int port = 2032;
-        std::string base_dir = "./";
         bool client = false;
         int verbose = 1;
         std::string cert_file = "./.ssh/cert.pem";
@@ -26,7 +25,6 @@ namespace taskservice {
             // better to use <format> but it breaks on linux and fmt broken on darwin
             os << "host:  " << v.host << ", "
                << "port:  " << v.port << ", "
-               << "base:  " << v.base_dir << ", "
                << "client:" << v.client << ", "
                << "cert:  " << v.cert_file << ", "
                << "key :  " << v.key_file << ", "

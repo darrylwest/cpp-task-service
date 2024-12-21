@@ -7,7 +7,7 @@
 #include <taskservice/cli.hpp>
 #include <taskservice/logging.hpp>
 #include <taskservice/service.hpp>
-#include <taskservice/tasks.hpp>
+#include <taskservice/taskdb.hpp>
 #include <taskservice/unit.hpp>
 #include <taskservice/version.hpp>
 

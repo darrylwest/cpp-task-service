@@ -5,7 +5,7 @@
 #include <taskservice/cli.hpp>
 #include <taskservice/logging.hpp>
 #include <taskservice/service.hpp>
-#include <taskservice/tasks.hpp>
+#include <taskservice/taskdb.hpp>
 #include <vendor/ansi_colors.hpp>
 #include <vendor/testlib.hpp>
 #include <taskservice/version.hpp>
