@@ -7,7 +7,7 @@
 #include <mutex>
 #include <vector>
 #include <iostream>
-#include <iostream>
+#include <sstream>
 
 namespace taskservice {
     struct Task {
