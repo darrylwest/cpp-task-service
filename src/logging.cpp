@@ -23,7 +23,7 @@ namespace taskservice {
 
         for (auto it = req.params.begin(); it != req.params.end(); ++it) {
             const auto &x = *it;
-            spdlog::info("{}={}", x.first.c_str(), x.second.c_str());
+            spdlog::info("{}", x.first.c_str());
         }
 
         show_headers(req.headers);

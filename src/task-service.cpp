@@ -11,6 +11,7 @@
 #include <taskservice/unit.hpp>
 #include <taskservice/version.hpp>
 
+// this is the server side
 int main(const int argc, char **argv) {
     using namespace httplib;
 

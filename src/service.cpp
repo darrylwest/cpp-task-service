@@ -32,11 +32,11 @@ namespace taskservice {
         // Error handler
         svr.set_error_handler([](const Request& req, Response& res) {
             spdlog::error("ERROR! bad request {} {}", req.method.c_str(), req.path.c_str());
-            // TODO : replace this with spdlog::fmt...
-            const char *fmt = "<p>Error Status: <span style='color:red;'>%d</span></p>";
+
+            const char *fmt = "Error Status: %d\n";
             char buf[BUFSIZ];
             snprintf(buf, sizeof(buf), fmt, res.status);
-            res.set_content(buf, "text/html");
+            res.set_content(buf, "text/plain");
         });
 
         // Logger
@@ -51,19 +51,26 @@ namespace taskservice {
         });
 
         svr.Post("/queue", [](const Request& req, Response& res) {
-            spdlog::info("build request");
+            std::string cmd = "";
+            for (auto it = req.params.begin(); it != req.params.end(); ++it) {
+                const auto &x = *it;
+                cmd.append(x.first.c_str());
+            }
 
-            res.set_content("ok", "text/plain");
+            spdlog::info("task request: {}", cmd.c_str());
+
+            const taskservice::Task t = taskservice::put_task(cmd);
+            
+            res.set_content(t.to_string(), "text/plain");
         });
 
         svr.Get("/queue", [](const Request& req, Response& res) {
             spdlog::info("long poll");
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(15000));
+            // std::this_thread::sleep_for(std::chrono::milliseconds(15000));
+            const taskservice::Task t = taskservice::get_task();
 
-            auto result = "ok.\n";
-
-            res.set_content(result, "text/plain");
+            res.set_content(t.to_string(), "text/plain");
         });
 
         svr.Get("/version", [](const Request &, Response &res) {

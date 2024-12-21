@@ -52,7 +52,6 @@ void test_default_config(Results& r) {
     r.equals(cfg.verbose == 1, "the default verbose assignment");
     r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
     r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
-    r.equals(cfg.client == false, "client should be false");
 }
 
 void test_port(Results& r) {
@@ -66,7 +65,6 @@ void test_port(Results& r) {
     r.equals(cfg.verbose == 1, "the default verbose assignment");
     r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
     r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
-    r.equals(cfg.client == false, "client should be false");
 }
 
 void test_host(Results& r) {
@@ -79,7 +77,6 @@ void test_host(Results& r) {
     r.equals(cfg.verbose == 1, "the default verbose assignment");
     r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
     r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
-    r.equals(cfg.client == false, "client should be false");
 }
 
 void test_cert_key(Results& r) {
@@ -95,20 +92,6 @@ void test_cert_key(Results& r) {
     r.equals(cfg.port == 2032, "the default port assignment");
     r.equals(cfg.host == "0.0.0.0", "the default host assignment");
     r.equals(cfg.verbose == 1, "the default verbose assignment");
-    r.equals(cfg.client == false, "client should be false");
-}
-
-void test_client(Results& r) {
-    const std::vector<std::string> args = {"test", "--client"};
-    auto [argc, argv] = build_args(args);
-    auto cfg = taskservice::parse_cli(argc, argv);
-
-    r.equals(cfg.client == true, "client should be true");
-    r.equals(cfg.port == 2032, "the default port assignment");
-    r.equals(cfg.host == "0.0.0.0", "the default host assignment");
-    r.equals(cfg.verbose == 1, "the default verbose assignment");
-    r.equals(cfg.cert_file == "./.ssh/cert.pem", "the default cert file assignment");
-    r.equals(cfg.key_file == "./.ssh/key.pem", "the default key file assignment");
 }
 
 Results test_cli() {
@@ -117,7 +100,6 @@ Results test_cli() {
     test_default_config(r);
     test_port(r);
     test_host(r);
-    test_client(r);
     test_cert_key(r);
 
     return r;
