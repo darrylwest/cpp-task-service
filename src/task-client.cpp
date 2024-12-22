@@ -110,17 +110,20 @@ int client_loop(const Config& config) {
 
     // loop
     while (true) {
+        spdlog::debug("task loop:");
         if (auto res = client.Get("/queue")) {
             if (res->status == 200 && res->body != "0:")  {
                 const taskservice::Task task = taskservice::task_from_string(res->body);
 
-                spdlog::info("parsed task: {}", task.to_string());
+                spdlog::debug("parsed task: {}", task.to_string());
                 if (task.command != "")  {
                     if (db.empty()) {
+                        spdlog::debug("first task: {}", task.to_string());
                         run_task(task);
                     } else {
                         // find it
                         if (db.back().created < task.created) {
+                            spdlog::debug("created new task: {}", task.to_string());
                             run_task(task);
                         }
                     }
