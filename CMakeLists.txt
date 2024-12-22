@@ -82,6 +82,12 @@ add_executable(task-service
     ${SRC_DIR}/cli.cpp
 )
 
+add_executable(task-client
+    ${SRC_DIR}/taskdb.cpp
+    ${SRC_DIR}/cli.cpp
+    ${SRC_DIR}/task-client.cpp
+)
+
 add_executable(integration ${SRC_DIR}/integration.cpp)
 
 # Link libraries to executables
@@ -89,7 +95,7 @@ target_link_libraries(task-service PRIVATE ${DEPENDENT_LIBRARIES})
 target_link_libraries(integration PRIVATE ${DEPENDENT_LIBRARIES})
 
 # Installation rules
-install(TARGETS task-service integration DESTINATION ${BIN_DIR})
+install(TARGETS task-service task-client integration DESTINATION ${BIN_DIR})
 
 # Static linking for standalone executable
 if(NOT APPLE)
