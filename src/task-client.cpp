@@ -109,15 +109,17 @@ int client_loop(const Config& config) {
                 const taskservice::Task task = taskservice::task_from_string(res->body);
 
                 spdlog::info("parsed task: {}", task.to_string());
-                if (db.empty()) {
-                    db.push_back(task);
-                    spdlog::warn("new task: {}", task.to_string());
-                } else {
-                    // find it
-                    if (db.back().created < task.created) {
-                        spdlog::warn("new task: {}", task.to_string());
+                if (task.command != "")  {
+                    if (db.empty()) {
                         db.push_back(task);
-                        // now run it
+                        spdlog::warn("new task: {}", task.to_string());
+                    } else {
+                        // find it
+                        if (db.back().created < task.created) {
+                            spdlog::warn("new task: {}", task.to_string());
+                            db.push_back(task);
+                            // now run it
+                        }
                     }
                 }
             } else {
