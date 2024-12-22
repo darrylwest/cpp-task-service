@@ -20,7 +20,7 @@ namespace taskservice {
         int major = 24;
         int minor = 12;
         int patch = 18;
-        int build = 114;
+        int build = 115;
 
         friend std::ostream& operator<<(std::ostream& os, const Version v) {
             // better to use <format> but it breaks on linux and fmt broken on darwin
