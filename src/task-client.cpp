@@ -116,6 +116,8 @@ int client_loop(const Config& config) {
                     // find it
                     if (db.back().created < task.created) {
                         spdlog::warn("new task: {}", task.to_string());
+                        db.push_back(task);
+                        // now run it
                     }
                 }
             } else {
