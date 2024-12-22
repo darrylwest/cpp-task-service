@@ -106,9 +106,11 @@ int client_loop(const Config& config) {
     auto run_task = [&](const taskservice::Task& task) {
         spdlog::info("new task: {}", task.to_string());
         db.push_back(task);
+        const auto result = taskservice::exec(task.command.c_str());
+        // std::cout << result << std::endl;
     };
 
-    // loop
+    // loop to pull new tasks
     while (true) {
         spdlog::debug("task loop:");
         if (auto res = client.Get("/queue")) {
@@ -150,7 +152,7 @@ int main(int argc, char** argv) {
     if (config.verbose) {
         spdlog::set_level(spdlog::level::debug);
     } else {
-        spdlog::set_level(spdlog::level::warn);
+        spdlog::set_level(spdlog::level::info);
     }
 
     return client_loop(config);

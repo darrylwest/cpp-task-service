@@ -24,6 +24,7 @@ namespace taskservice {
 
         while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
             result += buffer.data();
+            std::cout << buffer.data() << std::flush;
         }
         return result;
     }
