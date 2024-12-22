@@ -64,10 +64,8 @@ namespace taskservice {
         });
 
         svr.Get("/queue", [](const Request& req, Response& res) {
-            spdlog::info("long poll");
-
-            // std::this_thread::sleep_for(std::chrono::milliseconds(15000));
             const taskservice::Task t = taskservice::get_task();
+            spdlog::info("/query -> {}", t.to_string());
 
             res.set_content(t.to_string(), "text/plain");
         });

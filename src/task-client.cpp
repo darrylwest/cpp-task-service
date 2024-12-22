@@ -17,6 +17,7 @@ using namespace colors;
 struct Config {
     std::string host = "10.0.1.192"; // tiburon.local
     std::string port = "2032";
+    int loop_millis = 3000;
 };
 
 Config parse_cli(const int argc, char** argv) {
@@ -46,7 +47,7 @@ int client_loop(const Config& config) {
             }
         }
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(config.loop_millis));
     }
 
     return 0;
