@@ -15,7 +15,7 @@
 using namespace colors;
 
 struct Config {
-    std::string host = "localhost";
+    std::string host = "10.0.1.192"; // tiburon.local
     std::string port = "2032";
 };
 
