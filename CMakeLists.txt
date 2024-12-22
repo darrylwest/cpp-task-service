@@ -84,7 +84,6 @@ add_executable(task-service
 
 add_executable(task-client
     ${SRC_DIR}/taskdb.cpp
-    ${SRC_DIR}/cli.cpp
     ${SRC_DIR}/task-client.cpp
 )
 
@@ -92,6 +91,7 @@ add_executable(integration ${SRC_DIR}/integration.cpp)
 
 # Link libraries to executables
 target_link_libraries(task-service PRIVATE ${DEPENDENT_LIBRARIES})
+target_link_libraries(task-client PRIVATE ${DEPENDENT_LIBRARIES})
 target_link_libraries(integration PRIVATE ${DEPENDENT_LIBRARIES})
 
 # Installation rules
