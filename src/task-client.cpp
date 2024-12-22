@@ -105,7 +105,7 @@ int client_loop(const Config& config) {
     // loop
     while (true) {
         if (auto res = client.Get("/queue")) {
-            if (res->status == 200) {
+            if (res->status == 200 && res->body != "0:")  {
                 const taskservice::Task task = taskservice::task_from_string(res->body);
 
                 spdlog::info("parsed task: {}", task.to_string());
@@ -122,7 +122,7 @@ int client_loop(const Config& config) {
                         }
                     }
                 }
-            } else {
+            } else if (res->status > 299) {
                 spdlog::warn("task service at {} is donw..", svc);
             }
         }
