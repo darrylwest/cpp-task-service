@@ -60,7 +60,7 @@ void run_server(std::atomic<bool>& running, const Config& config) {
     pclose(pipe);
 
     // Wait for a brief period to allow the service to initialize
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::milliseconds(1200));
 }
 
 // use cxxopts to parse host and port

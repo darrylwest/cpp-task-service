@@ -203,6 +203,12 @@ Results test_tasks() {
     return r;
 }
 
+Results test_taskdb() {
+    Results r = {.name = "Task DB Tests"};
+
+    return r;
+}
+
 // replaces main
 int run_unit_tests(int argc, char* argv[]) {
     using namespace colors;
@@ -224,6 +230,7 @@ int run_unit_tests(int argc, char* argv[]) {
     run_test(test_version);
     run_test(test_cli);
     run_test(test_tasks);
+    run_test(test_taskdb);
     run_test(test_service);
 
     std::cout << "\n" << summary << std::endl;
