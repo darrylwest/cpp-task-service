@@ -193,7 +193,7 @@ void test_task_from_string(Results& r) {
 }
 
 Results test_tasks() {
-    Results r = {.name = "Task DB Tests"};
+    Results r = {.name = "Task Tests"};
 
     test_get_nulltask(r);
     test_put(r);
@@ -205,6 +205,15 @@ Results test_tasks() {
 
 Results test_taskdb() {
     Results r = {.name = "Task DB Tests"};
+
+    for (int i = 0; i < 15; i++) {
+        const auto cmd = std::string("mk clobber init build test");
+        const auto t = taskservice::put_task(cmd);
+
+        r.equals(t.command == t.command, "the command should be what was passed in");
+        r.equals(t.created > 0, "created should not be zero");
+        r.equals(taskservice::get_db_size() <= 12, "should not grow larger than the max size");
+    }
 
     return r;
 }

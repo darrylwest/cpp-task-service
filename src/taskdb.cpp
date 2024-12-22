@@ -73,4 +73,8 @@ namespace taskservice {
         return nulltask;
     }
 
+    size_t get_db_size() {
+        return tasks.size();
+    }
+
 }  // namespace taskservice

@@ -33,4 +33,5 @@ namespace taskservice {
     Task task_from_string(const std::string task_str);
     Task put_task(const std::string cmd);
     Task get_task();
+    size_t get_db_size();
 }  // namespace taskservice
