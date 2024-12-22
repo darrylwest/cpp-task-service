@@ -102,6 +102,12 @@ int client_loop(const Config& config) {
     // create the db to store launched tasks
     std::vector<taskservice::Task> db = {};
 
+    // lambda to store and run the task
+    auto run_task = [&](const taskservice::Task& task) {
+        spdlog::info("new task: {}", task.to_string());
+        db.push_back(task);
+    };
+
     // loop
     while (true) {
         if (auto res = client.Get("/queue")) {
@@ -111,14 +117,11 @@ int client_loop(const Config& config) {
                 spdlog::info("parsed task: {}", task.to_string());
                 if (task.command != "")  {
                     if (db.empty()) {
-                        db.push_back(task);
-                        spdlog::warn("new task: {}", task.to_string());
+                        run_task(task);
                     } else {
                         // find it
                         if (db.back().created < task.created) {
-                            spdlog::warn("new task: {}", task.to_string());
-                            db.push_back(task);
-                            // now run it
+                            run_task(task);
                         }
                     }
                 }

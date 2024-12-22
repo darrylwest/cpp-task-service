@@ -1,0 +1,10 @@
+I have a c++20 function inside a function.  How can I convert the inner function to a lambda call?  Here is my code:
+
+    std::vector<taskservice::Task> db = {};
+
+    // my inner function
+    void run_task(const taskservice::Task& task) {
+        spdlog::info("new task: {}", task.to_string());
+        db.push_back(task);
+        exec(task.command);
+    }
