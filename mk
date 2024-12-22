@@ -52,6 +52,11 @@ do
 
             shift
         ;;
+        client)
+            $root/build/task-client
+
+            exit 0
+        ;;
         run-debug)
             # TODO check that task-service has been built and is newer that all the souces
             $root/build/task-service --base $root/html --level 0
@@ -91,6 +96,11 @@ do
 
             shift
         ;;
+        pull)
+            git pull
+
+            shift
+        ;;
         version)
             curl -k https://localhost:$port/version
 
@@ -106,10 +116,12 @@ do
             echo "   test     : run all tests"
             echo "   run      : runs the app and shows version"
             echo "   run-debug: runs the service with logging set to debug"
+            echo "   client   : runs the task client"
             echo "   format   : runs clang-format over includes and src"
             echo "   watch    : run watcher over source and include"
             echo "   clean    : remove binary builds but leave the build folder"
             echo "   clobber  : remove the entire build folder"
+            echo "   pull     : pull the latest changes from git repo"
             echo "   show     : runs curl against localhost to view index page"
             echo "   shutdown : runs localhost curl shutdown the server"
             echo "   help     : show this help"

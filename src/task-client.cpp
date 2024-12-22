@@ -5,9 +5,11 @@
 
 #include <httplib.h>
 #include <spdlog/spdlog.h>
+#include <cxxopts.hpp>
 
 #include <thread>
 #include <iostream>
+#include <taskservice/runner.hpp>
 #include <taskservice/version.hpp>
 #include <taskservice/taskdb.hpp>
 #include <vendor/ansi_colors.hpp>
@@ -18,10 +20,75 @@ struct Config {
     std::string host = "10.0.1.192"; // tiburon.local
     std::string port = "2032";
     int loop_millis = 3000;
+    bool verbose = false; // set log to warn
+
+    friend std::ostream& operator<<(std::ostream& os, const Config v) {
+        // better to use <format> but it breaks on linux and fmt broken on darwin
+        os << "host:  " << v.host << ", "
+            << "port:  " << v.port << ", "
+            << "timeout:  " << v.loop_millis << ", "
+            << "verbose: " << v.verbose << ".";
+        return os;
+    }
+
+    std::string to_string() const {
+        std::ostringstream oss;
+        oss << *this;
+
+        return oss.str();
+    }
 };
 
 Config parse_cli(const int argc, char** argv) {
     auto config = Config();
+
+    // parse the cli
+    try {
+        cxxopts::Options options("TaskClient", "TLS client to read queue and run jobs.");
+        // clang-format off
+        options
+            .add_options()
+                ("p,port", "listening port", cxxopts::value<int>())
+                ("H,host", "listening host", cxxopts::value<std::string>())
+                ("t,timeout", "loop time in milliseconds", cxxopts::value<int>())
+                ("v,verbose", "set the logging to verbose")
+                ("V,version", "Show the current version and exit")
+                ("h,help", "Show this help")
+            ;
+
+        const auto version = taskservice::Version();
+        const auto result = options.parse(argc, argv);
+        if (result.count("version")) {
+            std::cout << "Task Client Version: " << version << std::endl;
+            exit(0);
+        }
+
+        if (result.count("help")) {
+            std::cout << "Task Client Version: " << version << std::endl;
+            std::cout << options.help() << std::endl;
+            exit(0);
+        }
+
+        if (result.count("port")) {
+            config.port = result["port"].as<int>();
+        }
+
+        if (result.count("host")) {
+            config.host = result["host"].as<std::string>();
+        }
+
+        if (result.count("timeout")) {
+            config.loop_millis = result["timeout"].as<int>();
+        }
+
+        if (result.count("verbose")) {
+            config.verbose = true;
+        }
+
+    } catch (const std::exception& exp) {
+        std::cout << "error parsing cli options: " << exp.what() << std::endl;
+        exit(1);
+    }
 
     return config;
 }
@@ -39,9 +106,18 @@ int client_loop(const Config& config) {
     while (true) {
         if (auto res = client.Get("/queue")) {
             if (res->status == 200) {
-                spdlog::info("task: {}", res->body);
-                // now parse and compare time
-                // run the task if it's new
+                const taskservice::Task task = taskservice::task_from_string(res->body);
+
+                spdlog::info("parsed task: {}", task.to_string());
+                if (db.empty()) {
+                    db.push_back(task);
+                    spdlog::warn("new task: {}", task.to_string());
+                } else {
+                    // find it
+                    if (db.back().created < task.created) {
+                        spdlog::warn("new task: {}", task.to_string());
+                    }
+                }
             } else {
                 spdlog::warn("task service at {} is donw..", svc);
             }
@@ -59,6 +135,13 @@ int main(int argc, char** argv) {
 
     auto vers = taskservice::Version();
     std::cout << cyan << "Task Client, Version "  << vers << reset << std::endl;
+    std::cout << yellow << config << reset << std::endl;
+
+    if (config.verbose) {
+        spdlog::set_level(spdlog::level::debug);
+    } else {
+        spdlog::set_level(spdlog::level::warn);
+    }
 
     return client_loop(config);
 }

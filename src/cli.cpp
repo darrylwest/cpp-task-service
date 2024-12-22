@@ -18,7 +18,7 @@ namespace taskservice {
         auto config = Config();
 
         try {
-            cxxopts::Options options("TaskService", "TLS server to queue and run jobs.");
+            cxxopts::Options options("TaskService", "TLS server to queue jobs.");
             // clang-format off
             options
                 .add_options()
