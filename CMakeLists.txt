@@ -94,7 +94,7 @@ target_link_libraries(task-client PRIVATE ${DEPENDENT_LIBRARIES})
 target_link_libraries(integration PRIVATE ${DEPENDENT_LIBRARIES})
 
 # Installation rules
-install(TARGETS task-service task-client integration DESTINATION ${BIN_DIR})
+install(TARGETS task-service task-client DESTINATION /usr/local/bin)
 
 # Static linking for standalone executable
 if(NOT APPLE)
