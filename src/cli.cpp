@@ -5,10 +5,10 @@
 #include <spdlog/spdlog.h>
 
 #include <cxxopts.hpp>
+#include <filesystem>
 #include <iostream>
 #include <taskservice/cli.hpp>
 #include <taskservice/version.hpp>
-#include <filesystem>
 
 namespace taskservice {
     namespace fs = std::filesystem;
@@ -99,7 +99,7 @@ namespace taskservice {
 
         if (!skip_cert_check) {
             if (!ensureCertFiles(config)) {
-                std::cerr << "Failed to create cert/key in $HOME/.task-service, bailing out." <<  std::endl;
+                std::cerr << "Failed to create cert/key in $HOME/.task-service, bailing out." << std::endl;
                 exit(1);
             }
 
@@ -138,7 +138,8 @@ namespace taskservice {
             // std::cout << "run this: " << cmd << std::endl;
             int code = std::system(cmd.c_str());
             if (code != 0) {
-                std::cerr << "Failed to create pem files. Consider creating them and place them in " << dir.c_str() << std::endl;
+                std::cerr << "Failed to create pem files. Consider creating them and place them in " << dir.c_str()
+                          << std::endl;
                 exit(1);
             }
         }

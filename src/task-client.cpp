@@ -2,32 +2,31 @@
 // 2024-12-22 06:29:29 dpw
 //
 
-
 #include <httplib.h>
 #include <spdlog/spdlog.h>
-#include <cxxopts.hpp>
 
-#include <thread>
+#include <cxxopts.hpp>
 #include <iostream>
 #include <taskservice/runner.hpp>
-#include <taskservice/version.hpp>
 #include <taskservice/taskdb.hpp>
+#include <taskservice/version.hpp>
+#include <thread>
 #include <vendor/ansi_colors.hpp>
 
 using namespace colors;
 
 struct Config {
-    std::string host = "10.0.1.192"; // tiburon.local
+    std::string host = "10.0.1.192";  // tiburon.local
     std::string port = "2032";
     int loop_millis = 3000;
-    bool verbose = false; // set log to warn
+    bool verbose = false;  // set log to warn
 
     friend std::ostream& operator<<(std::ostream& os, const Config v) {
         // better to use <format> but it breaks on linux and fmt broken on darwin
         os << "host:  " << v.host << ", "
-            << "port:  " << v.port << ", "
-            << "timeout:  " << v.loop_millis << ", "
-            << "verbose: " << v.verbose << ".";
+           << "port:  " << v.port << ", "
+           << "timeout:  " << v.loop_millis << ", "
+           << "verbose: " << v.verbose << ".";
         return os;
     }
 
