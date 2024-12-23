@@ -40,4 +40,5 @@ namespace taskservice {
     };
 
     Config parse_cli(const int argc, char** argv);
+    bool ensureCertFiles(Config& config);
 }  // namespace taskservice
