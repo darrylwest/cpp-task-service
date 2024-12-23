@@ -15,6 +15,13 @@ A use case is when you have multiple servers that need to compile the same sourc
 
 ## Installation Instructions
 
-### Docker
+* [ ] clone the [repo](https://github.com/darrylwest/cpp-task-service.git) 
+* [ ] cd to cpp-task-service and run `./mk init build`
+* [ ] install the service binary in /usr/local/bin/task-service
+* [ ] run the service
+* [ ] build the clients on remote dev machines
+* [ ] navigate to the target you want to build
+* [ ] use curl to post commands to the remote clients
 
-###### 2024.12.20 | dpw
+
+###### 2024.12.22 | dpw
