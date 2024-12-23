@@ -4,6 +4,7 @@
 
 #include <httplib.h>
 #include <spdlog/spdlog.h>
+#include <spdlog/fmt/fmt.h>
 
 #include <cxxopts.hpp>
 #include <iostream>
@@ -145,8 +146,8 @@ int main(int argc, char** argv) {
     auto config = parse_cli(argc, argv);
 
     auto vers = taskservice::Version();
-    std::cout << cyan << "Task Client, Version "  << vers << reset << std::endl;
-    std::cout << yellow << config << reset << std::endl;
+    fmt::print("Task Client, Version {}{}{}\n", cyan, vers.to_string(), reset);
+    fmt::print("{}{}{}\n", yellow, config.to_string(), reset);
 
     if (config.verbose) {
         spdlog::set_level(spdlog::level::debug);
