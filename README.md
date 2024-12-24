@@ -23,5 +23,8 @@ A use case is when you have multiple servers that need to compile the same sourc
 * [ ] navigate to the target you want to build
 * [ ] use curl to post commands to the remote clients
 
+## WARNING!
 
-###### 2024.12.22 | dpw
+This app shoud only be run on secured networks.  Really bad things can happen through the shell.  Use this at your own risk!
+
+###### 2024.12.23 | dpw
