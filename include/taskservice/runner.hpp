@@ -4,9 +4,7 @@
 
 #pragma once
 
-#include <array>
-#include <iostream>
-#include <memory>
+#include "precompiled.hpp"
 
 namespace taskservice {
 

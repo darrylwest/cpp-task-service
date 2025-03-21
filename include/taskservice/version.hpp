@@ -7,11 +7,7 @@
 
 #pragma once
 
-#include <algorithm>
-#include <iostream>
-#include <sstream>
-#include <stdexcept>
-#include <vector>
+#include "precompiled.hpp"
 
 namespace taskservice {
 
@@ -20,7 +16,7 @@ namespace taskservice {
         int major = 24;
         int minor = 12;
         int patch = 18;
-        int build = 120;
+        int build = 121;
 
         friend std::ostream& operator<<(std::ostream& os, const Version v) {
             // better to use <format> but it breaks on linux and fmt broken on darwin
@@ -28,7 +24,7 @@ namespace taskservice {
             return os;
         }
 
-        std::string to_string() const {
+        [[nodiscard]] std::string to_string() const {
             std::ostringstream oss;
             oss << *this;
 

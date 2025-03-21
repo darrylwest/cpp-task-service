@@ -2,6 +2,8 @@
 // 2024-12-10 18:27:44 dpw
 //
 
+#pragma once
+
 #include <taskservice/cli.hpp>
 #include <taskservice/logging.hpp>
 #include <taskservice/service.hpp>

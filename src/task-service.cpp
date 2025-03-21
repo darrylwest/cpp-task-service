@@ -6,9 +6,7 @@
 #include <spdlog/spdlog.h>
 
 #include <taskservice/cli.hpp>
-#include <taskservice/logging.hpp>
 #include <taskservice/service.hpp>
-#include <taskservice/taskdb.hpp>
 #include <taskservice/unit.hpp>
 #include <taskservice/version.hpp>
 #include <vendor/ansi_colors.hpp>

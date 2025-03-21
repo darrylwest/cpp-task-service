@@ -4,20 +4,17 @@
 
 #include <spdlog/spdlog.h>
 
-#include <mutex>
 #include <taskservice/taskdb.hpp>
-#include <thread>
-#include <vector>
 
 namespace taskservice {
-    const auto max_db_size = 10;
+    constexpr auto max_db_size = 10;
     const auto nulltask = Task{.command = "", .created = 0};
     std::vector<Task> tasks = {};
     std::mutex tasks_mutex;
 
     Task put_task(const std::string cmd) {
         std::lock_guard<std::mutex> lock(tasks_mutex);
-        auto now = std::time(nullptr);
+        const auto now = std::time(nullptr);
         Task t = Task{.command = cmd, .created = now};
 
         tasks.insert(tasks.begin(), t);
