@@ -2,11 +2,11 @@
 // 2024-12-09 10:28:16 dpw
 //
 
+#include "precompiled.hpp"
+
 #include <spdlog/spdlog.h>
 
 #include <cxxopts.hpp>
-#include <filesystem>
-#include <iostream>
 #include <taskservice/cli.hpp>
 #include <taskservice/version.hpp>
 

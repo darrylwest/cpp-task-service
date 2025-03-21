@@ -2,20 +2,15 @@
 // 2024-12-10 18:27:44 dpw
 //
 
+#include "precompiled.hpp"
+
 #include <httplib.h>
 #include <spdlog/spdlog.h>
 
-#include <chrono>
-#include <cstdio>
-#include <cstdlib>
-#include <fstream>
-#include <iostream>
-#include <sstream>
 #include <taskservice/logging.hpp>
-#include <taskservice/runner.hpp>
 #include <taskservice/service.hpp>
 #include <taskservice/taskdb.hpp>
-#include <thread>
+#include <taskservice/version.hpp>
 
 using namespace httplib;
 

@@ -4,13 +4,7 @@
 
 #pragma once
 
-#include <spdlog/spdlog.h>
-
-#include <cxxopts.hpp>
-#include <iostream>
-#include <sstream>
-
-#include "version.hpp"
+#include "precompiled.hpp"
 
 namespace taskservice {
 

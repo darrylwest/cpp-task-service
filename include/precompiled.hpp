@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <atomic>
 #include <array>
 #include <iostream>
 #include <memory>
@@ -12,3 +13,8 @@
 #include <mutex>
 #include <thread>
 #include <vector>
+#include <iostream>
+#include <cstdio>
+#include <chrono>
+#include <cstdlib>
+#include <fstream>

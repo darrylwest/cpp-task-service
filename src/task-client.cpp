@@ -2,16 +2,16 @@
 // 2024-12-22 06:29:29 dpw
 //
 
+#include "precompiled.hpp"
+
 #include <httplib.h>
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
 
 #include <cxxopts.hpp>
-#include <iostream>
 #include <taskservice/runner.hpp>
 #include <taskservice/taskdb.hpp>
 #include <taskservice/version.hpp>
-#include <thread>
 #include <vendor/ansi_colors.hpp>
 
 using namespace colors;
@@ -31,7 +31,7 @@ struct Config {
         return os;
     }
 
-    std::string to_string() const {
+    [[nodiscard]] std::string to_string() const {
         std::ostringstream oss;
         oss << *this;
 
