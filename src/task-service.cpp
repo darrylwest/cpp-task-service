@@ -2,12 +2,10 @@
 //  taskservice main
 //
 
-#include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
 
 #include <taskservice/cli.hpp>
 #include <taskservice/service.hpp>
-#include <taskservice/unit.hpp>
 #include <taskservice/version.hpp>
 #include <vendor/ansi_colors.hpp>
 
@@ -16,13 +14,7 @@ int main(const int argc, char **argv) {
     using namespace httplib;
 
     const std::string ss = std::string(argv[0]);
-    fmt::print("{}{}{}\n", colors::yellow, ss, colors::reset);
-
-    // run the unit tests
-    if (ss.substr(ss.size() - 4) == "unit") {
-        int code = run_unit_tests(argc, argv);
-        return code;
-    }
+    std::print("{}{}{}\n", colors::yellow, ss, colors::reset);
 
     const auto config = taskservice::parse_cli(argc, argv);
 

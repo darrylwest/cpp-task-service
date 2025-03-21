@@ -1,8 +1,9 @@
 //
-// 2024-12-10 18:27:44 dpw
+// 2025-03-21 18:02:33 dpw
 //
 
-#pragma once
+#include <spdlog/spdlog.h>
+#include <vendor/httplib.h>
 
 #include <taskservice/cli.hpp>
 #include <taskservice/logging.hpp>
@@ -221,7 +222,7 @@ Results test_taskdb() {
 }
 
 // replaces main
-int run_unit_tests(int argc, char* argv[]) {
+void run_unit_tests(int argc, char* argv[]) {
     using namespace colors;
     spdlog::set_level(spdlog::level::off);
 
@@ -247,6 +248,11 @@ int run_unit_tests(int argc, char* argv[]) {
     std::cout << "\n" << summary << std::endl;
     msg = (summary.failed == 0) ? green + "Ok" : "\n" + red + "Tests failed!";
     std::cout << cyan << "\nUnit Test Results: " << msg << reset << std::endl;
+
+}
+
+int main(int argc, char* argv[]) {
+    run_unit_tests(argc, argv);
 
     return 0;
 }
