@@ -1,4 +1,4 @@
-# Task Runner Service Application
+# Task Runner Service
 
 ```
  _______               __      _______                    __             
@@ -23,8 +23,11 @@ A use case is when you have multiple servers that need to compile the same sourc
 * [ ] navigate to the target you want to build
 * [ ] use curl to post commands to the host that relays to remote clients
 
+_See example-scripts for curl examples._
+
 ## WARNING!
 
 This app shoud only be run on secured networks.  Really bad things can happen through the shell.  Use this at your own risk!
 
 ###### 2025.03.21 | dpw
+
