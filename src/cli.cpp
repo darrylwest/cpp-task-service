@@ -9,6 +9,7 @@
 #include <cxxopts.hpp>
 #include <taskservice/cli.hpp>
 #include <taskservice/version.hpp>
+#include <fstream>
 
 namespace taskservice {
     namespace fs = std::filesystem;
