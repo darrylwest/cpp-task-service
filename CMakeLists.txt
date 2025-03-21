@@ -1,16 +1,30 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.3)
 
 # Project name and version
 project(TaskService VERSION 1.0 LANGUAGES CXX)
 
 # Set C++ standard
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Set default build type to Release
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+endif()
+
+# Add minimum compiler version check
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 16)
+        message(FATAL_ERROR "Clang version must be at least 16!")
+    endif()
+endif()
+
+# Add version checks for system requirements
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++23" COMPILER_SUPPORTS_CXX23)
+if(NOT COMPILER_SUPPORTS_CXX23)
+    message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++23 support.")
 endif()
 
 # Add the main include directory 
@@ -87,6 +101,20 @@ add_executable(task-client
 )
 
 add_executable(integration ${SRC_DIR}/integration.cpp)
+
+# Specify the precompiled header
+# target_precompile_headers(data-logger PRIVATE include/precompiled.hpp)
+
+# turn off optimization to speed compile times
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set(OPTIM_COMPILE_FLAGS "-O0")
+else()
+    set(OPTIM_COMPILE_FLAGS "-O0")
+endif()
+
+target_compile_options(task-client PRIVATE ${OPTIM_COMPILE_FLAGS})
+target_compile_options(task-service PRIVATE ${OPTIM_COMPILE_FLAGS})
+target_compile_options(integration PRIVATE ${OPTIM_COMPILE_FLAGS})
 
 # Link libraries to executables
 target_link_libraries(task-service PRIVATE ${DEPENDENT_LIBRARIES})

@@ -10,12 +10,25 @@ export root=`pwd`
 
 port=2032
 
+export os="$(uname -s)"
+export arch="$(uname -m)"
+
+[ $os == "Linux" ] && {
+    # export CC=/usr/bin/clang
+    # export CXX=/usr/bin/clang++
+    export CC=/usr/local/bin/gcc
+    export CXX=/usr/local/bin/g++
+    export FLAGS="-j8"
+} || {
+    export FLAGS="-j20"
+}
+
 # parse the cli
 while [[ $# -gt 0 ]]
 do
     case $1 in
         init)
-            /bin/rm -fr build/
+            [ -d build ] || mkdir build
             cmake -Bbuild .
 
             shift
@@ -26,7 +39,7 @@ do
             # remove the old unit test
             /bin/rm -f $root/build/unit
 
-            cmake --build build/ 
+            time cmake --build build/ 
             $root/build/task-service --version
 
             ln $root/build/task-service $root/build/unit

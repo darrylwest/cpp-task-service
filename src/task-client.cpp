@@ -3,8 +3,8 @@
 //
 
 #include <httplib.h>
-#include <spdlog/spdlog.h>
 #include <spdlog/fmt/fmt.h>
+#include <spdlog/spdlog.h>
 
 #include <cxxopts.hpp>
 #include <iostream>

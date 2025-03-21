@@ -1,3 +1,6 @@
 build
 *.pem
 *.log
+.idea
+.vscode
+cmake-build-*

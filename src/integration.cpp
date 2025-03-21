@@ -7,10 +7,7 @@
 #include <unistd.h>
 
 #include <atomic>
-#include <cassert>
-#include <csignal>
 #include <cstdio>
-#include <cstdlib>
 #include <iostream>
 #include <taskservice/version.hpp>
 #include <thread>

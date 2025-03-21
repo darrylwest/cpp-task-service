@@ -2,16 +2,16 @@
 //  taskservice main
 //
 
-#include <spdlog/spdlog.h>
 #include <spdlog/fmt/fmt.h>
+#include <spdlog/spdlog.h>
 
-#include <vendor/ansi_colors.hpp>
 #include <taskservice/cli.hpp>
 #include <taskservice/logging.hpp>
 #include <taskservice/service.hpp>
 #include <taskservice/taskdb.hpp>
 #include <taskservice/unit.hpp>
 #include <taskservice/version.hpp>
+#include <vendor/ansi_colors.hpp>
 
 // this is the server side
 int main(const int argc, char **argv) {
