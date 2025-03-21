@@ -2,8 +2,6 @@
 // 2024-12-22 06:29:29 dpw
 //
 
-#include "precompiled.hpp"
-
 #include <httplib.h>
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
@@ -13,6 +11,8 @@
 #include <taskservice/taskdb.hpp>
 #include <taskservice/version.hpp>
 #include <vendor/ansi_colors.hpp>
+
+#include "precompiled.hpp"
 
 using namespace colors;
 

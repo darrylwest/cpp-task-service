@@ -4,11 +4,7 @@
 
 #pragma once
 
-#include <ctime>
-#include <iostream>
-#include <mutex>
-#include <sstream>
-#include <vector>
+#include "precompiled.hpp"
 
 namespace taskservice {
     struct Task {

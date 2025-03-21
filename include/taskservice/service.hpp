@@ -4,11 +4,7 @@
 
 #pragma once
 
-#include <spdlog/spdlog.h>
 #include <vendor/httplib.h>
-
-#include <cstdio>
-#include <iostream>
 
 #include "cli.hpp"
 

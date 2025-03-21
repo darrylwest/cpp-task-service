@@ -2,8 +2,6 @@
 // 2024-12-10 18:27:44 dpw
 //
 
-#include "precompiled.hpp"
-
 #include <httplib.h>
 #include <spdlog/spdlog.h>
 
@@ -11,6 +9,8 @@
 #include <taskservice/service.hpp>
 #include <taskservice/taskdb.hpp>
 #include <taskservice/version.hpp>
+
+#include "precompiled.hpp"
 
 using namespace httplib;
 
