@@ -67,6 +67,8 @@ if(NOT BROTLI_INCLUDE_DIR OR NOT BROTLI_COMMON_LIBRARY OR NOT BROTLI_ENC_LIBRARY
     message(FATAL_ERROR "Brotli libraries not found. Make sure they are installed.")
 endif()
 
+message(STATUS "Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
+
 # Libraries for dependencies
 set(DEPENDENT_LIBRARIES
     OpenSSL::SSL
@@ -108,6 +110,7 @@ add_executable(task-unit
     ${SRC_DIR}/taskdb.cpp
 )
 
+
 add_executable(integration ${SRC_DIR}/integration.cpp)
 
 # Specify the precompiled header
@@ -134,6 +137,23 @@ target_link_libraries(integration PRIVATE ${DEPENDENT_LIBRARIES})
 
 # Installation rules
 install(TARGETS task-service task-client DESTINATION /usr/local/bin)
+
+# TODO configure for UNITY_BUILD_TARGETS
+set(UNITY_BUILD_TARGETS
+        task-service
+        task-client
+        task-unit
+        integration
+)
+
+foreach(target ${UNITY_BUILD_TARGETS})
+    set_target_properties(${target} PROPERTIES
+            UNITY_BUILD ON
+            UNITY_BUILD_MAX_FILE_COUNT 4
+            UNITY_BUILD_BATCH_SIZE 0
+    )
+endforeach()
+
 
 # Static linking for standalone executable
 if(NOT APPLE)

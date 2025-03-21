@@ -98,7 +98,7 @@ do
             shift
         ;;
 
-        page)
+        page|show)
             curl -k https://localhost:$port
 
             shift

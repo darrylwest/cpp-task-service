@@ -18,13 +18,13 @@ A use case is when you have multiple servers that need to compile the same sourc
 * [ ] clone the [repo](https://github.com/darrylwest/cpp-task-service.git) 
 * [ ] cd to cpp-task-service and run `./mk init build`
 * [ ] install the service binary in /usr/local/bin/task-service
-* [ ] run the service
-* [ ] build the clients on remote dev machines
+* [ ] run the service on the host machine
+* [ ] build the clients on remote dev machines configured to point to host
 * [ ] navigate to the target you want to build
-* [ ] use curl to post commands to the remote clients
+* [ ] use curl to post commands to the host that relays to remote clients
 
 ## WARNING!
 
 This app shoud only be run on secured networks.  Really bad things can happen through the shell.  Use this at your own risk!
 
-###### 2024.12.23 | dpw
+###### 2025.03.21 | dpw

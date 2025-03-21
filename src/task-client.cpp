@@ -17,9 +17,9 @@
 using namespace colors;
 
 struct Config {
-    std::string host = "10.0.1.192";  // tiburon.local
+    std::string host = "10.0.1.237";  // alamo .local
     std::string port = "2032";
-    int loop_millis = 3000;
+    int loop_millis = 2000;
     bool verbose = false;  // set log to warn
 
     friend std::ostream& operator<<(std::ostream& os, const Config v) {
@@ -111,27 +111,28 @@ int client_loop(const Config& config) {
     };
 
     // loop to pull new tasks
+    spdlog::info("starting task loop:");
     while (true) {
         spdlog::debug("task loop:");
         if (auto res = client.Get("/queue")) {
             if (res->status == 200 && res->body != "0:")  {
                 const taskservice::Task task = taskservice::task_from_string(res->body);
 
-                spdlog::debug("parsed task: {}", task.to_string());
+                spdlog::info("parsed task: {}", task.to_string());
                 if (task.command != "")  {
                     if (db.empty()) {
-                        spdlog::debug("first task: {}", task.to_string());
+                        spdlog::info("first task: {}", task.to_string());
                         run_task(task);
                     } else {
                         // find it
                         if (db.back().created < task.created) {
-                            spdlog::debug("created new task: {}", task.to_string());
+                            spdlog::info("created new task: {}", task.to_string());
                             run_task(task);
                         }
                     }
                 }
             } else if (res->status > 299) {
-                spdlog::warn("task service at {} is donw..", svc);
+                spdlog::warn("task service at {} is down..", svc);
             }
         }
 
