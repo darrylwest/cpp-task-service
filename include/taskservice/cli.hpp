@@ -25,7 +25,7 @@ namespace taskservice {
             return os;
         }
 
-        std::string to_string() const {
+        [[nodiscard]] std::string to_string() const {
             std::ostringstream oss;
             oss << *this;
 
@@ -33,6 +33,6 @@ namespace taskservice {
         }
     };
 
-    Config parse_cli(const int argc, char** argv);
+    Config parse_cli(int argc, char** argv);
     bool ensureCertFiles(Config& config);
 }  // namespace taskservice

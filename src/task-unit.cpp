@@ -222,7 +222,7 @@ Results test_taskdb() {
 }
 
 // replaces main
-int main(int argc, char* argv[]) {
+int main() {
     using namespace colors;
     spdlog::set_level(spdlog::level::off);
 

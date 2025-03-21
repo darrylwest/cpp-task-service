@@ -95,6 +95,7 @@ Config parse_cli(const int argc, char** argv) {
 
 int client_loop(const Config& config) {
     // create the client
+    bool keep_running = true;
     std::string svc = "https://" + config.host + ":" + config.port;
     httplib::Client client(svc);
     client.enable_server_certificate_verification(false);
@@ -107,19 +108,18 @@ int client_loop(const Config& config) {
         spdlog::info("new task: {}", task.to_string());
         db.push_back(task);
         const auto result = taskservice::exec(task.command.c_str());
-        // std::cout << result << std::endl;
     };
 
     // loop to pull new tasks
     spdlog::info("starting task loop:");
-    while (true) {
+    while (keep_running) {
         spdlog::debug("task loop:");
         if (auto res = client.Get("/queue")) {
             if (res->status == 200 && res->body != "0:")  {
                 const taskservice::Task task = taskservice::task_from_string(res->body);
 
                 spdlog::debug("parsed task: {}", task.to_string());
-                if (task.command != "")  {
+                if (!task.command.empty())  {
                     if (db.empty()) {
                         spdlog::debug("first task: {}", task.to_string());
                         run_task(task);

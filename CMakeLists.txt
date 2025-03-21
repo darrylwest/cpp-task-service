@@ -110,12 +110,7 @@ add_executable(task-unit
     ${SRC_DIR}/taskdb.cpp
 )
 
-
 add_executable(integration ${SRC_DIR}/integration.cpp)
-
-# Specify the precompiled header
-target_precompile_headers(task-service PRIVATE include/precompiled.hpp)
-target_precompile_headers(task-client PRIVATE include/precompiled.hpp)
 
 # turn off optimization to speed compile times
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -124,19 +119,27 @@ else()
     set(OPTIM_COMPILE_FLAGS "-O0")
 endif()
 
-target_compile_options(task-client PRIVATE ${OPTIM_COMPILE_FLAGS})
-target_compile_options(task-service PRIVATE ${OPTIM_COMPILE_FLAGS})
-target_compile_options(task-unit PRIVATE ${OPTIM_COMPILE_FLAGS})
-target_compile_options(integration PRIVATE ${OPTIM_COMPILE_FLAGS})
-
-# Link libraries to executables
-target_link_libraries(task-service PRIVATE ${DEPENDENT_LIBRARIES})
-target_link_libraries(task-client PRIVATE ${DEPENDENT_LIBRARIES})
-target_link_libraries(task-unit PRIVATE ${DEPENDENT_LIBRARIES})
-target_link_libraries(integration PRIVATE ${DEPENDENT_LIBRARIES})
-
 # Installation rules
 install(TARGETS task-service task-client DESTINATION /usr/local/bin)
+
+# Configure all targets
+# Create a function for setting up common target properties
+function(setup_target_properties target)
+    target_include_directories(${target} PRIVATE
+            ${CMAKE_SOURCE_DIR}/include
+            ${CMAKE_SOURCE_DIR}/include/vendor
+    )
+    target_link_libraries(${target} PRIVATE ${DEPENDENT_LIBRARIES})
+    target_compile_options(${target} PRIVATE ${OPTIM_COMPILE_FLAGS} -Wall -Wextra -Werror)
+    set_target_properties(${target} PROPERTIES UNITY_BUILD ON)
+    # Add precompiled header support
+    target_precompile_headers(${target} PRIVATE ${CMAKE_SOURCE_DIR}/include/precompiled.hpp)
+endfunction()
+
+# Use the function for each target
+foreach(target task-service task-client task-unit integration)
+    setup_target_properties(${target})
+endforeach()
 
 # TODO configure for UNITY_BUILD_TARGETS
 set(UNITY_BUILD_TARGETS

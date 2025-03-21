@@ -23,6 +23,8 @@ namespace taskservice {
             return false;
         }
 
+        spdlog::info("Starting task service, verbose: {}...", config.verbose);
+
         // Error handler
         svr.set_error_handler([](const Request& req, Response& res) {
             spdlog::error("ERROR! bad request {} {}", req.method.c_str(), req.path.c_str());
@@ -39,16 +41,15 @@ namespace taskservice {
         });
 
         svr.Get("/", [](const Request& req, Response& res) {
-            spdlog::info("home request");
+            spdlog::info("home request: {}", req.path.c_str());
 
             res.set_content("Task Service Home Page\n", "text/plain");
         });
 
         svr.Post("/queue", [](const Request& req, Response& res) {
-            std::string cmd = "";
-            for (auto it = req.params.begin(); it != req.params.end(); ++it) {
-                const auto& x = *it;
-                cmd.append(x.first.c_str());
+            std::string cmd;
+            for (const auto& p : req.params) {
+                cmd.append(p.first.c_str());
             }
 
             spdlog::info("task request: {}", cmd.c_str());
@@ -60,7 +61,7 @@ namespace taskservice {
 
         svr.Get("/queue", [](const Request& req, Response& res) {
             const taskservice::Task t = taskservice::get_task();
-            spdlog::info("/query -> {}", t.to_string());
+            spdlog::info("/{} -> {}", req.path.c_str(), t.to_string());
 
             res.set_content(t.to_string(), "text/plain");
         });
