@@ -36,7 +36,7 @@ do
         build)
             clear
 
-            time cmake --build build/ 
+            (cd build && time make $FLAGS)
             $root/build/task-service --version
 
             shift
