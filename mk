@@ -36,23 +36,18 @@ do
         build)
             clear
 
-            # remove the old unit test
-            /bin/rm -f $root/build/unit
-
             time cmake --build build/ 
             $root/build/task-service --version
-
-            ln $root/build/task-service $root/build/unit
 
             shift
         ;;
         unit)
-            $root/build/unit
+            $root/build/task-unit
 
             shift
         ;;
         test)
-            # TODO check that unit has been built and is newer that all the souces
+            $root/build/task-unit
             $root/build/integration
             bat --paging=never $root/service.log
 
@@ -82,7 +77,7 @@ do
             shift
         ;;
         clean)
-            (cd build && make clean && /bin/rm -f unit)
+            (cd build && make clean)
         
             shift
         ;;

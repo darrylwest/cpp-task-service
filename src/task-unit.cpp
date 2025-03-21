@@ -222,7 +222,7 @@ Results test_taskdb() {
 }
 
 // replaces main
-void run_unit_tests(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
     using namespace colors;
     spdlog::set_level(spdlog::level::off);
 
@@ -248,11 +248,6 @@ void run_unit_tests(int argc, char* argv[]) {
     std::cout << "\n" << summary << std::endl;
     msg = (summary.failed == 0) ? green + "Ok" : "\n" + red + "Tests failed!";
     std::cout << cyan << "\nUnit Test Results: " << msg << reset << std::endl;
-
-}
-
-int main(int argc, char* argv[]) {
-    run_unit_tests(argc, argv);
 
     return 0;
 }

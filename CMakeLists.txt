@@ -100,12 +100,13 @@ add_executable(task-client
     ${SRC_DIR}/task-client.cpp
 )
 
-#add_executable(task-unit
-#    ${SRC_DIR}/logging.cpp
-#    ${SRC_DIR}/service.cpp
-#    ${SRC_DIR}/cli.cpp
-#    ${SRC_DIR}/taskdb.cpp
-#)
+add_executable(task-unit
+    ${SRC_DIR}/task-unit.cpp
+    ${SRC_DIR}/logging.cpp
+    ${SRC_DIR}/service.cpp
+    ${SRC_DIR}/cli.cpp
+    ${SRC_DIR}/taskdb.cpp
+)
 
 add_executable(integration ${SRC_DIR}/integration.cpp)
 
@@ -122,13 +123,13 @@ endif()
 
 target_compile_options(task-client PRIVATE ${OPTIM_COMPILE_FLAGS})
 target_compile_options(task-service PRIVATE ${OPTIM_COMPILE_FLAGS})
-# target_compile_options(task-unit PRIVATE ${OPTIM_COMPILE_FLAGS})
+target_compile_options(task-unit PRIVATE ${OPTIM_COMPILE_FLAGS})
 target_compile_options(integration PRIVATE ${OPTIM_COMPILE_FLAGS})
 
 # Link libraries to executables
 target_link_libraries(task-service PRIVATE ${DEPENDENT_LIBRARIES})
 target_link_libraries(task-client PRIVATE ${DEPENDENT_LIBRARIES})
-# target_link_libraries(task-unit PRIVATE ${DEPENDENT_LIBRARIES})
+target_link_libraries(task-unit PRIVATE ${DEPENDENT_LIBRARIES})
 target_link_libraries(integration PRIVATE ${DEPENDENT_LIBRARIES})
 
 # Installation rules
