@@ -29,7 +29,7 @@ do
     case $1 in
         init)
             [ -d build ] || mkdir build
-            cmake -Bbuild .
+            (cd build && cmake ..)
 
             shift
         ;;
@@ -141,12 +141,10 @@ do
 
             shift
         ;;
-        *)
+        *) # the default
             ./mk help
             exit 0
         ;;
 
     esac
 done
-
-
