@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.30.5)
 
 # Project name and version
 project(TaskService VERSION 1.0 LANGUAGES CXX)
